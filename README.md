@@ -8,7 +8,7 @@ This project scrapes the underlying compliance data from the OCFS web app based 
 
 ## Contributing
 
-To contribute, open an [issue](/issues) or submit a [pull request](/pulls).
+To contribute, open an [issue](https://github.com/UpstateData/child-care-inspection-api/issues) or submit a [pull request](https://github.com/UpstateData/child-care-inspection-api/pulls).
 
 ## Using this app
 
