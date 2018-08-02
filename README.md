@@ -2,13 +2,13 @@
 
 A small app to provide API access to day care and child care facility inspection data managed by the New York State Office of Children and Family Services (OCFS).
 
-New York State provides open data on licensed and registered child care programs on it's open data portal, but facility inspection data and compliance history is maintained in an [OCFS web application](https://apps.netforge.ny.gov/dcfs/). This web app provides a facility lookup feature, but only provides the data as HTML (and clunky markup at that).
+New York State provides [open data on licensed and registered child care programs](https://data.ny.gov/Human-Services/Child-Care-Regulated-Programs-API/fymg-3wv3) on it's open data portal, but facility inspection data and compliance history is maintained in an [OCFS web application](https://apps.netforge.ny.gov/dcfs/). This web app provides a facility lookup feature, but only provides the data as HTML (and clunky markup at that).
 
 This project scrapes the underlying compliance data from the OCFS web app based on facility ID. The hope is that this will support development of a more user friendly day care lookup tool for parents, and allow this data to be more easily accessed by other applications.
 
 ## Contributing
 
-To contribute, open an issue or submit a pull request.
+To contribute, open an [issue](issues) or submit a [pull request](pulls).
 
 ## Using this app
 
