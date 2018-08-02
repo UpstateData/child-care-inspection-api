@@ -1,7 +1,7 @@
 const express = require('express');
 const request = require('request');
-var cheerio = require('cheerio');
-var tabletojson = require('tabletojson');
+const cheerio = require('cheerio');
+const tabletojson = require('tabletojson');
 
 // Base URL for the web site that shows day care & child care inspection data.
 const url_base = 'https://apps.netforge.ny.gov/dcfs/Profile/Index/';
@@ -35,6 +35,7 @@ app.get('/:id', (req, res) => {
             // If there are compliance results, create a new object to return.
             if (responseJson.length > 0) {
                 let complianceResults = new Object();
+                complianceResults.id = req.params.id;
                 complianceResults.fields = responseJson[0].splice(0, 1);
                 complianceResults.results = responseJson[0].splice(1, (responseJson[0].length - 5));
                 res.json(complianceResults);
