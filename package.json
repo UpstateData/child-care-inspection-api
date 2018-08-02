@@ -1,0 +1,18 @@
+{
+  "name": "child-care-inspection-api",
+  "version": "0.0.1",
+  "description": "An API for child care inspection information in NY State",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "author": "Mark J. Headd",
+  "license": "ISC",
+  "repository": "https://github.com/UpstateData/child-care-inspection-api",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.16.3",
+    "request": "^2.87.0",
+    "tabletojson": "^0.9.8"
+  }
+}
