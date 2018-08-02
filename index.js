@@ -9,18 +9,18 @@ const url_base = 'https://apps.netforge.ny.gov/dcfs/Profile/Index/';
 const app = express()
 
 app.get('/', (req, res) => {
-    res.status(400).json({ error: 'Append URL with facility ID'});
+    res.status(400).json({ error: 'Append URL with facility ID' });
 });
 
 // e.g., {api-endpoint/9614}
 app.get('/:id', (req, res) => {
-    
+
     // rejectUnauthorized used because the cert for the website is not set up properly.
-    request({ url: url_base + req.params.id, rejectUnauthorized: false}, (error, response, body) => {
+    request({ url: url_base + req.params.id, rejectUnauthorized: false }, (error, response, body) => {
         if (!error && response.statusCode == 200) {
-            
+
             // Parse the HTML response
-            $=cheerio.load(body);
+            $ = cheerio.load(body);
 
             // Find the <div> with the compliance results.
             let complianceHistory = $('#compliancehistoryDivImg')
@@ -33,15 +33,15 @@ app.get('/:id', (req, res) => {
             let responseJson = tabletojson.convert(complianceTable);
 
             // If there are compliance results, create a new object to return.
-            if(responseJson.length > 0) {
+            if (responseJson.length > 0) {
                 let complianceResults = new Object();
-                complianceResults.fields = responseJson[0].splice(0,1);
-                complianceResults.results = responseJson[0].splice(1,(responseJson[0].length - 5));
+                complianceResults.fields = responseJson[0].splice(0, 1);
+                complianceResults.results = responseJson[0].splice(1, (responseJson[0].length - 5));
                 res.json(complianceResults);
             }
             // Otherwise, compliance history table does not exist.
             else {
-                res.json({response: 'No compliance history found'});
+                res.json({ response: 'No compliance history found' });
             }
         }
         else {
