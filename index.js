@@ -3,8 +3,8 @@ const request = require('request');
 const cheerio = require('cheerio');
 const tabletojson = require('tabletojson');
 
-// Base URL for the web site that shows day care & child care inspection data.
-const url_base = 'https://apps.netforge.ny.gov/dcfs/Profile/Index/';
+// Import config settings.
+const config = require('./config');
 
 const app = express()
 
@@ -16,21 +16,11 @@ app.get('/', (req, res) => {
 app.get('/:id', (req, res) => {
 
     // rejectUnauthorized used because the cert for the website is not set up properly.
-    request({ url: url_base + req.params.id, rejectUnauthorized: false }, (error, response, body) => {
+    request({ url: config.settings.url_base + req.params.id, rejectUnauthorized: false }, (error, response, body) => {
         if (!error && response.statusCode == 200) {
 
-            // Parse the HTML response
-            $ = cheerio.load(body);
-
-            // Find the <div> with the compliance results.
-            let complianceHistory = $('#compliancehistoryDivImg')
-                .find('table')
-                .next()
-                .html();
-
-            // $.find() removes the table element, so add it back before passing to tabletojson.
-            let complianceTable = '<table>' + complianceHistory + '</table>';
-            let responseJson = tabletojson.convert(complianceTable);
+            let parsedResponse = parseResponse(body);
+            let responseJson = tabletojson.convert(parsedResponse);
 
             // If there are compliance results, create a new object to return.
             if (responseJson.length > 0) {
@@ -51,4 +41,20 @@ app.get('/:id', (req, res) => {
     });
 });
 
-app.listen(3000);
+app.listen(config.settings.port);
+
+// Parse the HTML response.
+parseResponse = (body) => {
+    
+    $ = cheerio.load(body);
+
+    // Find the <div> with the compliance results.
+    let complianceHistory = $('#compliancehistoryDivImg')
+        .find('table')
+        .next()
+        .html();
+
+    // $.find() removes the table element, so add it back before passing to tabletojson.
+    let complianceTable = '<table>' + complianceHistory + '</table>';
+    return complianceTable;
+};
